@@ -5,16 +5,19 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   # Note that we pass each job a different name to distinguish each linter job
   ament_lint_cpp:
     name: ament_${{ matrix.linter }}
-    runs-on: ubuntu-18.04
+#    runs-on: ubuntu-18.04
+    runs-on: [ self-hosted ]
     strategy:
       fail-fast: false
       matrix:
         linter: [cppcheck, cpplint, uncrustify, xmllint]
+
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: ros-tooling/setup-ros@0.0.26
